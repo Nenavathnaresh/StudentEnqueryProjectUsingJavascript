@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table{
+            border-collapse: collapse;
+            
+            border: 1px solid;
+            background-image: url(https://png.pngtree.com/thumb_back/fh260/background/20201101/pngtree-scene-with-geometrical-forms-the-poster-model-minimal-background-render-image_452981.jpg);
+        
+        }
+        button{
+            background-color: green;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="enquiry_data.html">Enquiry Data</a> |
+        <a href="filter.html">Filter</a>
+    </nav>
+    <form action="" onsubmit="event.preventDefault()" name="enquaryForm">
+        <table cellspacing="10px" align="center" cellpadding="10px">
+            <tr>
+                <td colspan="2" style="text-align: center; color: red; border-bottom: 1px solid black;"> <span><a href="enquiry_data.html">Enquiry data</a></span> <h1>Enquiry Form</h1></td>
+            </tr>
+            <tr>
+                <td><label for="">Name:</label></td>
+                <td><input type="text" name="name"></td>
+            </tr>
+            <tr>
+                <td><label for="">Phone number:</label></td>
+                <td><input type="text" name="phn"></td>
+            </tr>
+            <tr>
+                <td><label for="">Email:</label></td>
+                <td><input type="email" name="mail"></td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;"><label for="" >Course:</label></td>
+                <td>
+                    <input type="checkbox" name="course" value="frontend with angular"><label for="">Frontend with angular</label><br><br>
+                    <input type="checkbox" name="course" value="frontend with react"><label for="">Frontend with react</label><br><br>
+                    <input type="checkbox" name="course" value="full stack JAVA"><label for="">Full stack JAVA</label><br><br>
+                    <input type="checkbox" name="course" value="mean"><label for="">MEAN</label><br><br>
+                    <input type="checkbox" name="course" value="mern"><label for="">MERN</label><br><br>
+                    <input type="checkbox" name="course" value="devops"><label for="">Devops</label>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;"><label for="">Mode:</label></td>
+                <td>
+                    <input type="radio" name="mode" value="Offline"><label for="">Offline</label><br><br>
+                    <input type="radio" name="mode" value="Online"><label for="">Online</label>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: top;">Feedback:</td>
+                <td>
+                    <label for="">Date and time:</label>
+                    <input type="date" name="dat"> <br><br>
+                    <label for="">Remarks:</label>
+                    <textarea name="remark" id="" cols="30" rows="5"></textarea> <br><br>
+                    <label for="">Interest:</label>
+                    <select name="interest" id="">
+                        <option value="">Choose an option</option>
+                        <option value="interested">Interested</option>
+                        <option value="not interested">Not Interested</option>
+                    </select> <br><br>
+                    <label for="">Next call Date:</label>
+                    <input type="date" name="nextcall">
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><button onclick="save()" >SAVE</button></td>
+            </tr>
+        </table>
+    </form>
+    <script>
+        var enquiries = [];
+        if(!window.localStorage.getItem('enquiries')){
+            window.localStorage.setItem('enquiries','[]')
+        }
+        else{
+          enquiries = JSON.parse(window.localStorage.getItem('enquiries'));
+        }
+
+
+        var enquaryForm = document.enquaryForm;
+
+        function save(){
+            var person = {
+                'enqDate' : new Date(),
+                'name' : "",
+                "phonenumber" : "",
+                "email" : "",
+                "course" : [],
+                "mode" : "",
+                "feedback" : []
+            }
+            person.name = enquaryForm.name.value;
+            person.phonenumber = enquaryForm.phn.value;
+            person.email = enquaryForm.mail.value;
+            person.mode = enquaryForm.mode.value;
+            enquaryForm.course.forEach(function(courses){
+                if(courses.checked === true){
+                    person.course.push(courses.value)
+                }
+            })
+            var feed = {};
+            feed['date and time'] = new Date(enquaryForm.dat.value)
+            feed['remark'] = enquaryForm.remark.value
+            feed['interest'] = enquaryForm.interest.value
+            feed['next call'] = new Date(enquaryForm.nextcall.value)
+            person.feedback.push(feed)
+            enquiries.push(person)
+            window.localStorage.setItem('enquiries',JSON.stringify(enquiries))
+            enquaryForm.reset();
+        }
+    </script>
+</body>
+</html>

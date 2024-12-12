@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a> | 
+        <a href="filter.html">Filter</a>
+    </nav>
+    <table border="1px solid">
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <th>Phone number</th>
+                <th>Email</th>
+                <th>courses</th>
+                <th>Date</th>
+                <th>Feedback</th>
+            </tr>
+        </tbody>
+        <tbody id="tb">
+
+        </tbody>
+    </table>
+    <script>
+        var x = JSON.parse(window.localStorage.getItem('enquiries'));
+
+        var table = document.getElementById('tb')
+        function enquiryData(person){
+            person.forEach(function(a,b){
+                var tr = document.createElement('tr');
+
+                var td1 = document.createElement('td');
+                td1.innerHTML = a.name;
+                //console.log(a.name);
+                var td2 = document.createElement('td');
+                td2.innerHTML = a.phonenumber;
+                var td3 = document.createElement('td');
+                td3.innerHTML = a.email;
+                var td4 = document.createElement('td');
+                td4.innerHTML = a.course;
+                var td5 = document.createElement('td');
+                td5.innerHTML = a.enqDate;
+                var td6 = document.createElement('td');
+                td6.innerHTML = a.feedback[a.feedback.length-1].remark;
+
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(td3);
+                tr.appendChild(td4);
+                tr.appendChild(td5);
+                tr.appendChild(td6);
+
+                table.appendChild(tr)
+
+
+            })
+            
+        }
+        enquiryData(x)
+        console.log(x);
+
+    </script>
+</body>
+</html>
